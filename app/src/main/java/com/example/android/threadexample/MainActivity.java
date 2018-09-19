@@ -1,6 +1,7 @@
 package com.example.android.threadexample;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,10 +13,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private Button buttonStartThread;
-
-    private Handler mainHandler = new Handler();
-
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
             for (int i = 0; i < seconds; i++) {
                 if (i == 5) {
-                    mainHandler.post(new Runnable() {
+                    Handler threadHandler = new Handler(Looper.getMainLooper());
+                    threadHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             buttonStartThread.setText("50%");
