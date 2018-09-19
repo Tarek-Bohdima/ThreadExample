@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private Button buttonStartThread;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,13 +44,12 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
             for (int i = 0; i < seconds; i++) {
                 if (i == 5) {
-                    Handler threadHandler = new Handler(Looper.getMainLooper());
-                    threadHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            buttonStartThread.setText("50%");
-                        }
-                    });
+                   buttonStartThread.post(new Runnable() {
+                       @Override
+                       public void run() {
+                           buttonStartThread.setText("50%");
+                       }
+                   });
                 }
                 Log.d(TAG, "startThread: " + i);
                 try {
