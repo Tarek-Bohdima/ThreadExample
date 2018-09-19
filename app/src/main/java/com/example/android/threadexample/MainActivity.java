@@ -23,41 +23,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startThread(View view) {
-        ExampleRunnable runnable = new ExampleRunnable(10);
-        //runnable.run();  we can use this to run this runnable on the same thread we are on if we want to.
-        new Thread(runnable).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(int i = 0; i < 10; i++) {
+                    if (i == 5) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                buttonStartThread.setText("50%");
+                            }
+                        });
+                    }
+                    Log.d(TAG, "run: " + i);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 
     public void stopThread(View view) {
-    }
-
-
-    class ExampleRunnable implements Runnable {
-
-        int seconds;
-
-        ExampleRunnable(int seconds) {
-            this.seconds = seconds;
-        }
-
-        @Override
-        public void run() {
-            for (int i = 0; i < seconds; i++) {
-                if (i == 5) {
-                  runOnUiThread(new Runnable() {
-                      @Override
-                      public void run() {
-                          buttonStartThread.setText("50%");
-                      }
-                  });
-                }
-                Log.d(TAG, "startThread: " + i);
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 }
