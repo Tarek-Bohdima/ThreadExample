@@ -14,6 +14,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Button buttonStartThread;
 
+    private volatile boolean stopThread = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,10 +25,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startThread(View view) {
+        stopThread = false;
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 for(int i = 0; i < 10; i++) {
+                    if (stopThread) {
+                        return;
+                    }
                     if (i == 5) {
                         runOnUiThread(new Runnable() {
                             @Override
@@ -47,5 +54,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void stopThread(View view) {
+        stopThread = true;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                buttonStartThread.setText("START");
+            }
+        });
     }
 }
