@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startThread(View view) {
         ExampleRunnable runnable = new ExampleRunnable(10);
+        //runnable.run();  we can use this to run this runnable on the same thread we are on if we want to.
         new Thread(runnable).start();
     }
 
