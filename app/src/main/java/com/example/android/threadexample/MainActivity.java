@@ -44,12 +44,12 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
             for (int i = 0; i < seconds; i++) {
                 if (i == 5) {
-                   buttonStartThread.post(new Runnable() {
-                       @Override
-                       public void run() {
-                           buttonStartThread.setText("50%");
-                       }
-                   });
+                  runOnUiThread(new Runnable() {
+                      @Override
+                      public void run() {
+                          buttonStartThread.setText("50%");
+                      }
+                  });
                 }
                 Log.d(TAG, "startThread: " + i);
                 try {
